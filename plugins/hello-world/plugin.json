@@ -1,0 +1,13 @@
+{
+  "name": "hello-world",
+  "version": "1.0.0",
+  "description": "Plugin de ejemplo que devuelve un saludo personalizado",
+  "author": "Ikerlan",
+  "license": "MIT",
+  "tags": ["ejemplo", "demo", "saludo"],
+  "package": "hello-world-plugin",
+  "homepage": "https://github.com/AribelGuzman/plugin-marketplace",
+  "compatibility": {
+    "nodeVersion": ">=18.0.0"
+  }
+}
