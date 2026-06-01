@@ -1,0 +1,16 @@
+{
+  "name": "ikerlan-plugins",
+  "owner": { "name": "Ikerlan" },
+  "plugins": [
+    {
+      "name": "nodejs-app",
+      "source": "./nodejs-app",
+      "description": "Scaffolding y utilidades para construir aplicaciones Node.js"
+    },
+    {
+      "name": "cloudflare-deploy",
+      "source": "./cloudflare-deploy",
+      "description": "Despliegue y configuración de Cloudflare Workers"
+    }
+  ]
+}

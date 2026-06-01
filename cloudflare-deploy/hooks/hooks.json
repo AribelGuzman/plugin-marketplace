@@ -1,0 +1,9 @@
+{
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": "Edit|Write",
+      "command": "if [ -f wrangler.toml ] && grep -q 'main' wrangler.toml; then node -e \"const f=require('fs');const t=f.readFileSync('wrangler.toml','utf8');const m=t.match(/main\\s*=\\s*['\\\"](.+?)['\\\"]/);if(m&&!f.existsSync(m[1])){console.warn('[cloudflare-deploy] ADVERTENCIA: el entry point',m[1],'no existe');}\" 2>/dev/null || true; fi"
+    }
+  ]
+}

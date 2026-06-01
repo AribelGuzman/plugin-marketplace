@@ -1,88 +1,78 @@
-# Plugin Marketplace
+# Ikerlan Plugin Marketplace para Claude Code
 
-Marketplace de plugins construido con **Node.js + Express** y desplegable en **Cloudflare Workers**.
+Marketplace de plugins para Claude Code con comandos para construir apps Node.js y desplegar en Cloudflare Workers.
 
-## Inicio rápido
+## Instalación
 
-```bash
-git clone https://github.com/AribelGuzman/plugin-marketplace
-cd plugin-marketplace
-npm install
-npm run dev
+```
+/plugin marketplace add ./ruta/a/plugin-marketplace
 ```
 
-API disponible en `http://localhost:3000`.
+Luego en Claude Code:
+1. Escribe `/plugins`
+2. Navega a **marketplaces**
+3. Selecciona **ikerlan-plugins**
+4. Instala el plugin que necesites
 
-## Endpoints
+---
 
-| Método | Ruta                          | Descripción                         |
-|--------|-------------------------------|-------------------------------------|
-| GET    | `/`                           | Información de la API               |
-| GET    | `/health`                     | Estado del servidor                 |
-| GET    | `/api/plugins`                | Listar todos los plugins            |
-| GET    | `/api/plugins?q=<búsqueda>`   | Buscar plugins por nombre/etiqueta  |
-| GET    | `/api/plugins/:name`          | Detalles de un plugin               |
-| POST   | `/api/plugins/:name/install`  | Instrucciones de instalación        |
+## Plugins disponibles
 
-## Crear un plugin
+### `nodejs-app`
 
-Crea un directorio en `plugins/<nombre>/` con dos archivos:
+Scaffolding y utilidades para construir aplicaciones Node.js.
 
-**`plugin.json`**
-```json
-{
-  "name": "mi-plugin",
-  "version": "1.0.0",
-  "description": "Qué hace este plugin",
-  "author": "Tu nombre",
-  "tags": ["etiqueta"]
-}
-```
+| Comando | Descripción |
+|---|---|
+| `/nodejs-app:scaffold [nombre]` | Crea una app Node.js + Express lista para producción |
+| `/nodejs-app:add-route <MÉTODO> <ruta>` | Añade una ruta Express al proyecto actual |
+| `/nodejs-app:add-test <archivo>` | Genera tests con `node:test` para un archivo |
 
-**`index.js`**
-```js
-function execute(input) {
-  return { result: input };
-}
-module.exports = { execute };
-```
+---
 
-El plugin aparece automáticamente en `GET /api/plugins` sin reiniciar el servidor.
+### `cloudflare-deploy`
 
-## Despliegue en Cloudflare Workers
+Despliegue y configuración de Cloudflare Workers desde Claude Code.
 
-```bash
-npm install -g wrangler
-wrangler login
-wrangler deploy
-```
+| Comando | Descripción |
+|---|---|
+| `/cloudflare-deploy:setup [nombre]` | Configura `wrangler.toml` en el proyecto actual |
+| `/cloudflare-deploy:deploy [--env nombre]` | Despliega el Worker en Cloudflare |
+| `/cloudflare-deploy:add-binding <tipo> <NOMBRE>` | Añade un binding KV / D1 / R2 / AI |
 
-Consulta [`skills/cloudflare-deploy.md`](skills/cloudflare-deploy.md) para la configuración completa.
-
-## Skills de Claude Code
-
-Este repositorio incluye skills para que Claude Code te ayude a trabajar en el proyecto:
-
-- [`skills/nodejs-app.md`](skills/nodejs-app.md) — crear plugins y rutas Node.js
-- [`skills/cloudflare-deploy.md`](skills/cloudflare-deploy.md) — desplegar en Cloudflare Workers
+---
 
 ## Estructura
 
 ```
 plugin-marketplace/
-├── src/
-│   ├── index.js        ← servidor Express
-│   ├── worker.js       ← Cloudflare Workers entry point
-│   ├── registry.js     ← carga plugins del disco
-│   ├── routes/
-│   └── middleware/
-├── plugins/
-│   └── hello-world/    ← plugin de ejemplo
-├── skills/             ← guías para Claude Code
-├── wrangler.toml       ← configuración Cloudflare
-└── .claude/CLAUDE.md   ← contexto para Claude Code
+├── .claude-plugin/
+│   └── marketplace.json          ← registro del marketplace
+├── nodejs-app/
+│   ├── .claude-plugin/
+│   │   └── plugin.json
+│   ├── commands/
+│   │   ├── scaffold.md
+│   │   ├── add-route.md
+│   │   └── add-test.md
+│   └── scripts/
+│       └── scaffold.sh
+└── cloudflare-deploy/
+    ├── .claude-plugin/
+    │   └── plugin.json
+    ├── commands/
+    │   ├── deploy.md
+    │   ├── setup.md
+    │   └── add-binding.md
+    ├── hooks/
+    │   └── hooks.json
+    └── scripts/
+        └── deploy.sh
 ```
 
-## Licencia
+## Añadir un plugin nuevo
 
-MIT
+1. Crea un directorio: `mkdir -p mi-plugin/{.claude-plugin,commands,scripts}`
+2. Añade los metadatos en `mi-plugin/.claude-plugin/plugin.json`
+3. Crea los comandos como archivos `.md` en `mi-plugin/commands/`
+4. Registra el plugin en `.claude-plugin/marketplace.json`

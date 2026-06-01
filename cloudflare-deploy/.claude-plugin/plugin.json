@@ -1,0 +1,7 @@
+{
+  "name": "cloudflare-deploy",
+  "version": "1.0.0",
+  "description": "Despliegue y configuración de Cloudflare Workers desde Claude Code",
+  "author": "Ikerlan",
+  "commands": ["deploy", "setup", "add-binding"]
+}

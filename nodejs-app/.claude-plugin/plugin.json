@@ -1,0 +1,7 @@
+{
+  "name": "nodejs-app",
+  "version": "1.0.0",
+  "description": "Scaffolding y utilidades para construir aplicaciones Node.js",
+  "author": "Ikerlan",
+  "commands": ["scaffold", "add-route", "add-test"]
+}
